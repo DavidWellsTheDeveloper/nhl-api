@@ -1,3 +1,8 @@
 module.exports = {
-  publicPath: ''
+  publicPath: '',
+  devServer: {
+    allowedHosts: [
+      'focowebsites.com'
+    ]
+  }
 }
