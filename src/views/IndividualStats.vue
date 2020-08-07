@@ -1,5 +1,7 @@
 <template>
-  <div class="home">
+  <div class="playerStats">
+    <h1>Individual Stats</h1>
+    <hr />
     <div v-for="team in teams" :key="team.id">
       <TeamCard :team=team />
     </div>
@@ -10,7 +12,7 @@
 import TeamCard from '@/components/TeamCard.vue'
 import axios from 'axios'
 export default {
-  name: 'Home',
+  name: 'playerStats',
   components: {
     TeamCard
   },
