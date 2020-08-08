@@ -4,7 +4,7 @@
     <hr />
     <div class="container">
       <div class="row">
-        <div class="col-4" v-for="team in teams" :key="team.id">
+        <div class="col-sm-12 col-md-6" v-for="team in teams" :key="team.id">
           <TeamCard :team=team />
         </div>
       </div>
