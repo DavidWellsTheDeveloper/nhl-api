@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
-    <button class="btn btn-info" v-on:click="collectStats">{{this.showStats?"Hide":"See"}} Player Stats</button>
-    <div class="row" v-if="showStats">
+  <div class="container playerStats">
+    <button class="btn btn-info" v-on:click="collectStats">{{this.showStats?"Hide":"See"}} {{ this.name }} Stats</button>
+    <div class="row" v-if="showStats && stats != null">
       <div v-for="(value, key) in this.stats.stat" :key="key">
         <div class="card mt-3 col">
           {{key}}: <span class="badge badge-secondary">{{ value }}</span>
@@ -15,7 +15,8 @@
 import axios from 'axios'
 export default {
   props: {
-    playerid: [String, Number]
+    playerid: [String, Number],
+    name: String
   },
   created () {
     // this.collectStats()
@@ -48,5 +49,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.playerStats {
+  margin-bottom: 5px;
+}
 </style>

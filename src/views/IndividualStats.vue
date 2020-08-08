@@ -2,8 +2,12 @@
   <div class="playerStats">
     <h1>Individual Stats</h1>
     <hr />
-    <div v-for="team in teams" :key="team.id">
-      <TeamCard :team=team />
+    <div class="container">
+      <div class="row">
+        <div class="col-4" v-for="team in teams" :key="team.id">
+          <TeamCard :team=team />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -50,3 +54,7 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+
+</style>

@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
+  <div class="team-card">
     <div class="row">
-      <div class="col-2">
+      <div class="col-4">
         <img v-if="this.team.conference.name === 'Eastern'" src="../assets/eastern_conference.png" height="40" alt="Eastern">
         <img v-else-if="this.team.conference.name === 'Western'" src="../assets/western_conference.png" height="40" alt="Western">
 
@@ -11,18 +11,16 @@
         <img v-else-if="this.team.division.name === 'Metropolitan'" src="../assets/metropolitan_division.png" height="40" alt="Metropolitan Division">
       </div>
 
-      <div class="col-7">
-        {{this.team.name}} <a :href="this.team.officialSiteUrl" target="blank">Official Website</a>
+      <div class="col-4">
+        <a :href="this.team.officialSiteUrl" target="blank"><img :src="'teams/' + team.name + '.gif'" height="50%" alt="Team Logo"></a>
       </div>
-      <div class="col-3">
+      <div class="col-4">
         <button v-on:click="collectRoster" class="btn btn-info">{{ showRoster?"Hide":"Show" }} Roster</button>
       </div>
     </div>
     <div id="roster" v-show="showRoster">
       <div v-for="player in roster" :key="player.id">
-        <p>Name: {{ player.person.fullName }}--Position: {{ player.position.name }}--Jersey: {{player.jerseyNumber}}
-          <PlayerStats :playerid = player.person.id />
-        </p>
+          <PlayerStats :playerid = player.person.id :name = player.person.fullName />
       </div>
     </div>
   </div>
@@ -69,17 +67,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.card {
-  padding: 20px;
-  margin-bottom: 12px;
-  transition: all 0.2s linear;
-  cursor: pointer;
-  &:hover {
-    transform: scale(1.01);
-    box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.2), 0 1px 15px 0 rgba(0, 0, 0, 0.19);
+.team-card {
+  border: 1px black solid;
+  .card {
+    padding: 20px;
+    margin-bottom: 12px;
+    transition: all 0.2s linear;
+    cursor: pointer;
+    &:hover {
+      transform: scale(1.01);
+      box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.2), 0 1px 15px 0 rgba(0, 0, 0, 0.19);
+    }
+  }
+  .card > .title {
+    margin: 0;
   }
 }
-.card > .title {
-  margin: 0;
-}
+
 </style>
