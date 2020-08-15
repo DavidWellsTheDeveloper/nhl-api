@@ -6,7 +6,7 @@
         <span class="badge badge-danger gameStatus" v-if="gameData.status.abstractGameState === 'Final'">Final</span>
         <span class="badge badge-success gameStatus" v-if="gameData.status.abstractGameState === 'Preview'">Preview</span>
       </div>
-      <div class="col-2">
+      <div class="col-11 col-lg-2">
         <div v-if="gameData.linescore.currentPeriod != 0">
           <h5>
             Period:
@@ -21,7 +21,7 @@
           <h5><strong>{{gameTime}}</strong></h5>
         </div>
       </div>
-      <div class="col-4" style="border: 1px solid #cccccc;">
+      <div class="col-6 col-lg-3" style="border: 1px solid #cccccc;">
         <h4 style="text-align: left;">Home</h4>
         <br><img style="float: left;" :src="'teams/' + gameData.teams.home.team.name + '.gif'" height="50%" alt="home team">
         <section v-if="gameData.status.abstractGameState != 'Preview'" class="gameStats">
@@ -31,7 +31,7 @@
           <p>Shots: <strong>{{gameData.linescore.teams.home.shotsOnGoal}}</strong></p>
         </section>
       </div>
-      <div class="col-4" style="border: 1px solid #cccccc;">
+      <div class="col-6 col-lg-3" style="border: 1px solid #cccccc;">
         <h4 style="text-align: left;">Away</h4>
         <br><img style="float: left;" :src="'teams/' + gameData.teams.away.team.name + '.gif'" height="50%" alt="away team">
         <section v-if="gameData.status.abstractGameState != 'Preview'" class="gameStats">
@@ -41,7 +41,7 @@
           <p>Shots: <strong>{{gameData.linescore.teams.away.shotsOnGoal}}</strong></p>
         </section>
       </div>
-      <div class="col-1" style="background-color: #dddddd;">
+      <div class="col-12 col-lg-3" style="background-color: #dddddd;">
         <h4>Series</h4>
         <p>{{gameData.seriesSummary.seriesStatus}}
           <br>Game #{{gameData.seriesSummary.gameNumber}}</p>
