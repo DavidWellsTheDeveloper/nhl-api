@@ -1,9 +1,11 @@
 <template>
   <div class="container">
     <div class="row" >
-      <span class="badge badge-warning align-middle col-1 gameStatus" v-if="gameData.status.abstractGameState === 'Live'">Live</span>
-      <span class="badge badge-danger align-middle col-1 gameStatus" v-if="gameData.status.abstractGameState === 'Final'">Final</span>
-      <span class="badge badge-success align-middle col-1 gameStatus" v-if="gameData.status.abstractGameState === 'Preview'">Preview</span>
+      <div class="col-1">
+        <span class="badge badge-warning gameStatus" v-if="gameData.status.abstractGameState === 'Live'">Live</span>
+        <span class="badge badge-danger gameStatus" v-if="gameData.status.abstractGameState === 'Final'">Final</span>
+        <span class="badge badge-success gameStatus" v-if="gameData.status.abstractGameState === 'Preview'">Preview</span>
+      </div>
       <div class="col-2">
         <div v-if="gameData.linescore.currentPeriod != 0">
           <h5>
@@ -11,29 +13,38 @@
             <span v-if="gameData.linescore.currentPeriod > 3">OT {{ gameData.linescore.currentPeriod - 3 }}</span>
             <span v-else>{{ gameData.linescore.currentPeriod }}</span>
           </h5>
+          <p v-if="gameData.linescore.intermissionInfo.intermissionTimeRemaining != 0">{{gameData.linescore.intermissionInfo.intermissionTimeRemaining}} Remaining in Intermission</p>
+          <p v-else><i>{{gameData.linescore.currentPeriodTimeRemaining}} Remaining in Period {{ gameData.linescore.currentPeriod }}</i></p>
         </div>
         <div v-else>
           <h6>Not Started</h6>
           <h5><strong>{{gameTime}}</strong></h5>
         </div>
       </div>
-      <div class="col-3">
-        Home: <br><img :src="'teams/' + gameData.teams.home.team.name + '.gif'" height="50%" alt="home team">
-        <span v-if="gameData.status.abstractGameState != 'Preview'" class="score">
-          {{gameData.teams.home.score}}
-        </span>
-        <br><i>Wins: {{gameData.teams.home.leagueRecord.wins}}</i>
-        <br><i>Losses: {{gameData.teams.home.leagueRecord.losses}}</i>
-        <br><i v-if="gameData.teams.home.leagueRecord.ot != 0">OT Losses: {{gameData.teams.home.leagueRecord.ot}}</i>
+      <div class="col-4" style="border: 1px solid #cccccc;">
+        <h4 style="text-align: left;">Home</h4>
+        <br><img style="float: left;" :src="'teams/' + gameData.teams.home.team.name + '.gif'" height="50%" alt="home team">
+        <section v-if="gameData.status.abstractGameState != 'Preview'" class="gameStats">
+          <span class="score">
+            {{gameData.teams.home.score}}<br>
+          </span>
+          <p>Shots: <strong>{{gameData.linescore.teams.home.shotsOnGoal}}</strong></p>
+        </section>
       </div>
-      <div class="col-3">
-        Away: <br><img :src="'teams/' + gameData.teams.away.team.name + '.gif'" height="50%" alt="away team">
-        <span v-if="gameData.status.abstractGameState != 'Preview'" class="score">
-          {{gameData.teams.away.score}}
-        </span>
-        <br><i>Wins: {{gameData.teams.away.leagueRecord.wins}}</i>
-        <br><i>Losses: {{gameData.teams.away.leagueRecord.losses}}</i>
-        <br><i v-if="gameData.teams.away.leagueRecord.ot != 0">OT Losses: {{gameData.teams.away.leagueRecord.ot}}</i>
+      <div class="col-4" style="border: 1px solid #cccccc;">
+        <h4 style="text-align: left;">Away</h4>
+        <br><img style="float: left;" :src="'teams/' + gameData.teams.away.team.name + '.gif'" height="50%" alt="away team">
+        <section v-if="gameData.status.abstractGameState != 'Preview'" class="gameStats">
+          <span class="score">
+            {{gameData.teams.away.score}}<br>
+          </span>
+          <p>Shots: <strong>{{gameData.linescore.teams.away.shotsOnGoal}}</strong></p>
+        </section>
+      </div>
+      <div class="col-1" style="background-color: #dddddd;">
+        <h4>Series</h4>
+        <p>{{gameData.seriesSummary.seriesStatus}}
+          <br>Game #{{gameData.seriesSummary.gameNumber}}</p>
       </div>
     </div>
   </div>
@@ -48,7 +59,6 @@ export default {
   },
   computed: {
     gameTime () {
-      console.log(this.gameData.gameDate)
       return dateFormat(new Date(this.gameData.gameDate), 'hh:MM TT')
     }
   }
