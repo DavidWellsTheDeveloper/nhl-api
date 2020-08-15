@@ -5,36 +5,52 @@
       <span class="badge badge-danger align-middle col-1 gameStatus" v-if="gameData.status.abstractGameState === 'Final'">Final</span>
       <span class="badge badge-success align-middle col-1 gameStatus" v-if="gameData.status.abstractGameState === 'Preview'">Preview</span>
       <div class="col-2">
-        <h5 v-if="gameData.linescore.currentPeriod != 0">
-          Period: {{ gameData.linescore.currentPeriod }}
-        </h5>
-        <h6 v-else>Not Started</h6>
+        <div v-if="gameData.linescore.currentPeriod != 0">
+          <h5>
+            Period:
+            <span v-if="gameData.linescore.currentPeriod > 3">OT {{ gameData.linescore.currentPeriod - 3 }}</span>
+            <span v-else>{{ gameData.linescore.currentPeriod }}</span>
+          </h5>
+        </div>
+        <div v-else>
+          <h6>Not Started</h6>
+          <h5><strong>{{gameTime}}</strong></h5>
+        </div>
       </div>
       <div class="col-3">
         Home: <br><img :src="'teams/' + gameData.teams.home.team.name + '.gif'" height="50%" alt="home team">
         <span v-if="gameData.status.abstractGameState != 'Preview'" class="score">
           {{gameData.teams.home.score}}
         </span>
+        <br><i>Wins: {{gameData.teams.home.leagueRecord.wins}}</i>
+        <br><i>Losses: {{gameData.teams.home.leagueRecord.losses}}</i>
+        <br><i v-if="gameData.teams.home.leagueRecord.ot != 0">OT Losses: {{gameData.teams.home.leagueRecord.ot}}</i>
       </div>
       <div class="col-3">
         Away: <br><img :src="'teams/' + gameData.teams.away.team.name + '.gif'" height="50%" alt="away team">
         <span v-if="gameData.status.abstractGameState != 'Preview'" class="score">
           {{gameData.teams.away.score}}
         </span>
-      </div>
-      <div class="col-3">
-        <span v-if="gameData.gameType='P'">Qualifying</span>
-        <span v-else-if="gameData.gameType='R'">Round Robin</span>
+        <br><i>Wins: {{gameData.teams.away.leagueRecord.wins}}</i>
+        <br><i>Losses: {{gameData.teams.away.leagueRecord.losses}}</i>
+        <br><i v-if="gameData.teams.away.leagueRecord.ot != 0">OT Losses: {{gameData.teams.away.leagueRecord.ot}}</i>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import dateFormat from 'dateformat'
 export default {
   name: 'Game',
   props: {
     gameData: Object
+  },
+  computed: {
+    gameTime () {
+      console.log(this.gameData.gameDate)
+      return dateFormat(new Date(this.gameData.gameDate), 'hh:MM TT')
+    }
   }
 }
 </script>

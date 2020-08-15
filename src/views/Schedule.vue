@@ -22,7 +22,7 @@ export default {
     const today = new Date()
     const todayFormat = dateFormat(today, 'yyyy-mm-dd')
     let tomorrow = new Date()
-    tomorrow = tomorrow.setDate(today.getDate() + 2)
+    tomorrow = tomorrow.setDate(today.getDate() + 1)
     const tomorrowFormat = dateFormat(tomorrow, 'yyyy-mm-dd')
     axios.get('https://statsapi.web.nhl.com/api/v1/schedule?startDate=' + todayFormat + '&endDate=' + tomorrowFormat + '&hydrate=team,linescore&site=en_nhl')
       .then(response => {
